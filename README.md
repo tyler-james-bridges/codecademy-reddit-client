@@ -46,7 +46,7 @@ The public Render app runs commit `b48d9ea5f44176b98e0fe755ef56677f556ece1b`. Ho
 
 The earlier browser-only client could not reach Reddit's JSON API. The current server integration is checked with mocked provider responses; successful live Reddit data remains unverified. Reddit's current documentation requires developer approval and authentication; this project does not bypass those restrictions. No API keys or user credentials are included. See [Reddit access guidance](https://support.reddithelp.com/hc/en-us/articles/14945211791892-Developer-Platform-Accessing-Reddit-Data).
 
-Public deployment is complete. Successful live Reddit listing, search, and comments remain pending developer approval and server credentials; Lighthouse scoring is also outstanding.
+Public deployment is complete. Successful live Reddit listing, search, and comments remain pending developer approval and server credentials. The [mobile Lighthouse audit](https://pagespeed.web.dev/analysis/https-codecademy-reddit-client-tjb-onrender-com/v4uz82nfgi?form_factor=mobile) scored Performance **98**, Accessibility **100**, Best Practices **92**, and SEO **100** (Lighthouse 13.5.0; October 2, 2026, 11:17 PM MST). It assessed the normal homepage showing the API-approval-pending notice, not live Reddit data.
 
 ## Live API access
 
