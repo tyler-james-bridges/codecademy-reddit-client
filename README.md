@@ -2,7 +2,7 @@
 
 A calm, responsive conversation browser built for Codecademy's Reddit Client portfolio project.
 
-[Public source repository](https://github.com/tyler-james-bridges/codecademy-reddit-client).
+[Live app](https://codecademy-reddit-client-tjb.onrender.com) · [Public source repository](https://github.com/tyler-james-bridges/codecademy-reddit-client).
 
 ## Run
 
@@ -42,11 +42,11 @@ See [the project board and desktop/mobile wireframes](docs/plan.md). The Codecad
 
 ## Current verification limits
 
-The private hosted preview was published from commit `800dfbb108b6f780bb95e628f2f419c9e519197a`. The retry fix and same-origin OAuth server have not been deployed to that older static preview. This repository requires the Node server for live integration.
+The public Render app runs commit `b48d9ea5f44176b98e0fe755ef56677f556ece1b`. Hosted browser checks confirmed the API-approval-pending notice, six clearly labelled sample posts, and discussion details with sample comments.
 
 The earlier browser-only client could not reach Reddit's JSON API. The current server integration is checked with mocked provider responses; successful live Reddit data remains unverified. Reddit's current documentation requires developer approval and authentication; this project does not bypass those restrictions. No API keys or user credentials are included. See [Reddit access guidance](https://support.reddithelp.com/hc/en-us/articles/14945211791892-Developer-Platform-Accessing-Reddit-Data).
 
-The source is hosted on GitHub. The portfolio is not complete until successful live-data verification, public app deployment, additional browser checks, and Lighthouse scoring are recorded. A private preview alone does not satisfy the public deployment requirement.
+Public deployment is complete. Successful live Reddit listing, search, and comments remain pending developer approval and server credentials; Lighthouse scoring is also outstanding.
 
 ## Live API access
 
@@ -58,7 +58,7 @@ Once approved, set `REDDIT_API_APPROVED=true`, `REDDIT_CLIENT_ID`, `REDDIT_CLIEN
 
 ## Render setup
 
-`render.yaml` prepares one Node web service with live API access disabled. Build: `npm ci --include=dev && npm run build`. Start: `npm start`. Health check: `/health`. Render supplies `PORT`; production binds `0.0.0.0`. No database is required. Add the four Reddit environment values privately only after approval and confirm real listing, search, and comments before marking live integration complete. This change does not deploy the app.
+`render.yaml` prepares one Node web service with live API access disabled. Build: `npm ci --include=dev && npm run build`. Start: `npm start`. Health check: `/health`. Render supplies `PORT`; production binds `0.0.0.0`. No database is required. Add the four Reddit environment values privately only after approval and confirm real listing, search, and comments before marking live integration complete. The published service currently leaves live API access disabled.
 
 ## Future work
 
