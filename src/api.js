@@ -1,7 +1,7 @@
 const cache = new Map();
 let requests = [];
 let blockedUntil = 0;
-const BASE = 'https://www.reddit.com';
+const BASE = '/api/reddit';
 export function safeUrl(value) {
   try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) ? url.href : null; } catch { return null; }
 }
@@ -24,6 +24,7 @@ export async function requestJson(path, signal, decode = data => data) {
     blockedUntil = now + (retry && Number.isFinite(seconds) ? Math.max(60, seconds) * 1000 : 60000);
     throw new Error('Reddit is limiting requests. Please try again in a minute, or explore sample conversations.');
   }
+  if (response.status === 503) throw new Error('Live Reddit is waiting for approved API access and server configuration. You can still explore sample conversations.');
   if (!response.ok) throw new Error(response.status === 403 || response.status === 401 ? 'Reddit access is unavailable. This connection may require approved API access. You can still explore sample conversations.' : 'Reddit is having trouble responding. Try again shortly or explore sample conversations.');
   let data;
   try { data = await response.json(); } catch { throw new Error('Reddit returned an unreadable response. Please try again.'); }

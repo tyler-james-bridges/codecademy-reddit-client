@@ -5,8 +5,8 @@
 | Plan | Done | Scope, states, and acceptance criteria recorded |
 | Wireframes | Done | Desktop and mobile layouts below |
 | Build UI | Done | Cards, combined filters/search, accessible detail dialog; desktop and 390px mobile layouts inspected |
-| Reddit integration | In progress | Listing, search, comments, cache, rate limit and error recovery implemented; successful live responses remain unverified |
-| Tests | In progress | Jest/Enzyme behavior tests and six saved Computer Use regression checks; broader browser coverage remains |
+| Reddit integration | In progress | Same-origin server OAuth, listing, search, comments, cache and rate limits prepared; approval and successful live responses remain pending |
+| Tests | In progress | Ten Jest/Enzyme tests, five mocked server test groups and six saved Computer Use regression checks; live and broader browser coverage remains |
 | Publish | In progress | Public GitHub source is available; public app URL remains pending |
 | Verify | In progress | Local build and sample-mode checks recorded; live API, Lighthouse, and additional browsers remain |
 

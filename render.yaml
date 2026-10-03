@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: codecademy-reddit-client
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.21.0
+      - key: NODE_ENV
+        value: production
+      - key: REDDIT_API_APPROVED
+        value: "false"

@@ -7,7 +7,11 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "jest --runInBand"
+    "test": "npm run test:client && npm run test:server",
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "dev:server": "node --env-file-if-exists=.env --watch server/index.js",
+    "test:client": "jest --runInBand",
+    "test:server": "node --test server/*.test.mjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
@@ -44,5 +48,8 @@
       "**/*.test.js",
       "**/*.test.jsx"
     ]
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
