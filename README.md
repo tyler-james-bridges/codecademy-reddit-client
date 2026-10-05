@@ -1,70 +1,62 @@
-# Threadlight for Reddit
+# Threadlight
 
-A calm, responsive conversation browser built for Codecademy's Reddit Client portfolio project.
+A responsive Reddit conversation browser built with React and Redux for Codecademy's Full-Stack Engineer course.
 
-[Live app](https://codecademy-reddit-client-tjb.onrender.com) · [Public source repository](https://github.com/tyler-james-bridges/codecademy-reddit-client).
+[Open Threadlight on Reddit](https://www.reddit.com/r/threadlight_tjb/comments/1wylz41/threadlightprobe/) · [Source](https://github.com/tyler-james-bridges/codecademy-reddit-client)
 
-## Run
+## Live application
+
+The `devvit/` application runs inside a Reddit post. Its server uses Reddit's supported Devvit SDK for public posts, search, and comments. Readers do not need a Reddit login or their own API credentials. It does not vote, post comments, read private account data, or export Reddit content to another service.
+
+The hosting community allows anyone to view the app; posting in the community is restricted. The Devvit app slug is `threadlight-probe`, retained from the initial feasibility test.
+
+## Run and verify
+
+Use Node 24.21 or later:
 
 ```sh
+cd devvit
 npm ci
 npm test
+npm run test:types
+npm run lint
 npm run build
-npm start
+npm run login
+npm run dev -- threadlight_tjb
 ```
 
-Use Node 22.12+ (Node 24.21.0 is configured for Render). The server runs at `http://localhost:3018`; add `?demo=1` for deterministic sample content. The normal URL requests only the same-origin server. With approval or credentials absent, the server returns an explicit unavailable state without contacting Reddit, and the existing sample-mode option remains available. All sample posts and comments are original fictional fixtures, clearly labelled in the interface.
+The last command is for the app owner. Other developers need their own Devvit app name and test community. Devvit's Reddit API calls require a Reddit playtest session; a local static preview cannot supply that context. The CLI stores its authentication separately from this repository. Never commit tokens or credentials.
 
-For development, run `npm run dev:server` and `npm run dev` in separate terminals, then open `http://localhost:3019`. Vite proxies `/api` to the local server on port 3018. The server reads a private `.env` if present; copy the blank `.env.example` and keep `REDDIT_API_APPROVED=false` until approval is granted.
+## Features and technologies
 
-## Features
+- React 18, Redux Toolkit, React Redux, Vite, CSS, and react-markdown.
+- Devvit's Reddit SDK with a Hono server; Jest and Enzyme component tests.
+- Initial live feed, community filters, and submitted searches.
+- Post details and comments in a keyboard-accessible dialog, with Escape dismissal and focus restoration.
+- Responsive layouts, reduced-motion support, loading and empty states, and recoverable errors.
+- Bounded requests, memory caching, rate-limit cooldowns, and protection against stale responses.
+- Safe Markdown rendering without raw HTML. Reddit links use Devvit navigation.
 
-- Community filters and submitted text search, including combined filtering.
-- Accessible native discussion dialog, Markdown comments, Escape close, and focus restoration.
-- Responsive desktop/mobile layout with reduced-motion support.
-- Separate loading, empty, error, and success states with recovery actions.
-- Five-minute memory cache for validated responses, ten-request rolling minute limit, HTTP 429 cooldown, and latest-request guards.
-- Safe Markdown rendering without raw HTML; external links use safe HTTP(S) schemes.
+See [the project board and desktop/mobile wireframes](docs/plan.md) for the plan, state model, and layout. Codecademy's Kanban board is the course task tracker.
 
-## Technologies
+## Verification
 
-React 18, Redux Toolkit, React Redux, Vite, react-markdown, CSS, the Node HTTP server, Jest, and Enzyme. The course explicitly asks for Enzyme; its React 18 support uses the community-maintained `@cfaester/enzyme-adapter-react-18`. A future modernization should move component tests to React Testing Library and the current React release.
+On October 5, 2026, the full app (Devvit version 0.0.1.5) passed live checks for the initial popular feed, global and filtered search, post details/comments, Escape dismissal with focus restoration, empty-search recovery, and a mobile-width layout without horizontal overflow. A fresh, signed-out Chrome Incognito window also loaded the live feed and comments. The public post works without a developer playtest URL parameter.
 
-## Plan and wireframes
+All 24 Devvit tests passed (12 client and 12 backend), along with typecheck, lint, production build, and six deterministic browser regression checks. The API tests cover validation, rate-limit responses, retry behavior, and sanitized upstream failures. No test suite sends live Reddit requests.
 
-See [the project board and desktop/mobile wireframes](docs/plan.md). The Codecademy Kanban board is the primary course task tracker.
+The original standalone interface's [mobile Lighthouse audit](https://pagespeed.web.dev/analysis/https-codecademy-reddit-client-tjb-onrender-com/v4uz82nfgi?form_factor=mobile) scored Performance 98, Accessibility 100, Best Practices 92, and SEO 100 on October 2. That audit covered the Render homepage with its API-pending notice; it is not an audit of Reddit's surrounding page or the live Devvit integration.
 
-## Tests
+## Original standalone version
 
-`npm test` runs the original ten client behavior tests covering component actions, filter combinations, stale response handling, query encoding, cache behavior, rate limiting, failed/malformed responses, and successful retries after invalid feed or comment data. Five additional Node test groups use injected provider responses and local HTTP to check approval/configuration gating, fixed OAuth hosts and routes, token/cache renewal, sanitized failures, and rate limiting. No tests call Reddit.
+The repository root retains the earlier Node/Render implementation and its tests. Run `npm ci`, `npm test`, and `npm run build` from the root to verify it. Its [Render deployment](https://codecademy-reddit-client-tjb.onrender.com) remains gated, with clearly labelled fictional examples available at `?demo=1`.
 
-`tests/browser-e2e.mjs` is an executable end-to-end scenario for the Codex Computer Use session. Bind the app tab on `?demo=1`, import the module, and call `run(tab)`. It exercises search, filters, details, comments, keyboard dismissal, focus restoration, empty results, and recovery. Responsive inspection is performed separately at desktop and 390px width.
-
-## Current verification limits
-
-The public Render app runs commit `b48d9ea5f44176b98e0fe755ef56677f556ece1b`. Hosted browser checks confirmed the API-approval-pending notice, six clearly labelled sample posts, and discussion details with sample comments.
-
-The earlier browser-only client could not reach Reddit's JSON API. The current server integration is checked with mocked provider responses; successful live Reddit data remains unverified. Reddit's current documentation requires developer approval and authentication; this project does not bypass those restrictions. No API keys or user credentials are included. See [Reddit access guidance](https://support.reddithelp.com/hc/en-us/articles/14945211791892-Developer-Platform-Accessing-Reddit-Data).
-
-Public deployment is complete. Successful live Reddit listing, search, and comments remain pending developer approval and server credentials. The [mobile Lighthouse audit](https://pagespeed.web.dev/analysis/https-codecademy-reddit-client-tjb-onrender-com/v4uz82nfgi?form_factor=mobile) scored Performance **98**, Accessibility **100**, Best Practices **92**, and SEO **100** (Lighthouse 13.5.0; October 2, 2026, 11:17 PM MST). It assessed the normal homepage showing the API-approval-pending notice, not live Reddit data.
-
-## Live API access
-
-Reddit's [Responsible Builder Policy](https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy) requires explicit approval before API access. Its [Data API Wiki](https://support.reddithelp.com/hc/en-us/articles/16160319875092-Reddit-Data-API-Wiki) requires registered OAuth authentication and blocks unauthenticated traffic. The browser now calls only the same-origin Node server; it never receives app credentials or OAuth tokens.
-
-The [developer access request](https://support.reddithelp.com/hc/en-us/requests/new?tf_42139884615700=api_request_type_developer_clone&ticket_form_id=14868593862164) for this external, non-commercial course client was submitted on October 3, 2026, and acknowledged as received. Approval remains pending, and live API access remains disabled. Wait for approval before registering/configuring the appropriate OAuth client and enabling the server connection. App-profile registration alone does not establish Data API approval. No approval or credentials are included here.
-
-Once approved, set `REDDIT_API_APPROVED=true`, `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, and a truthful `REDDIT_USER_AGENT` with the format shown in `.env.example`. The server uses Reddit's documented [application-only OAuth](https://github.com/reddit-archive/reddit/wiki/OAuth2#application-only-oauth) `installed_client` grant for logged-out readers, with `DO_NOT_TRACK_THIS_DEVICE`; no user login or private account access is needed. It holds the token in memory until shortly before expiry and allows only the existing listing, search, and comments operations against `oauth.reddit.com`. Responses are validated before a bounded five-minute memory cache; a shared ten-request minute budget and provider cooldown protect the single server instance. Secrets belong only in server environment variables, never `VITE_*` variables.
-
-## Render setup
-
-`render.yaml` prepares one Node web service with live API access disabled. Build: `npm ci --include=dev && npm run build`. Start: `npm start`. Health check: `/health`. Render supplies `PORT`; production binds `0.0.0.0`. No database is required. Add the four Reddit environment values privately only after approval and confirm real listing, search, and comments before marking live integration complete. The published service currently leaves live API access disabled.
+The traditional Data API request was denied, and a reconsideration remains pending. The standalone server must keep `REDDIT_API_APPROVED=false` unless Reddit explicitly approves that separate integration. Devvit uses its own supported authentication path; the website does not proxy data from Devvit.
 
 ## Future work
 
-- Verify the prepared server OAuth connection with real responses after Reddit approval.
-- Add pagination, nested replies, images, and per-community sorting.
-- Add broader browser coverage and continuous deployment.
-- Evaluate a PWA after live access is verified.
+- Pagination, nested replies, images, and per-community sorting.
+- Broader browser coverage and a repeatable audit of the app within Reddit's hosting environment.
+- Modernize the course-required Enzyme tests to React Testing Library.
 
-This is an independent educational project and is not affiliated with Reddit.
+This is an independent educational project and is not affiliated with Reddit or Codecademy.

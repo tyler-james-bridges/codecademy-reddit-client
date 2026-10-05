@@ -5,10 +5,10 @@
 | Plan | Done | Scope, states, and acceptance criteria recorded |
 | Wireframes | Done | Desktop and mobile layouts below |
 | Build UI | Done | Cards, combined filters/search, accessible detail dialog; desktop and 390px mobile layouts inspected |
-| Reddit integration | In progress | Same-origin server OAuth, listing, search, comments, cache and rate limits prepared; approval and successful live responses remain pending |
-| Tests | In progress | Ten Jest/Enzyme tests, five mocked server test groups and six saved Computer Use regression checks; live and broader browser coverage remains |
-| Publish | In progress | Public GitHub source is available; public app URL remains pending |
-| Verify | In progress | Local build and sample-mode checks recorded; live API, Lighthouse, and additional browsers remain |
+| Reddit integration | Done | Devvit SDK supplies live popular/community feeds, global/scoped search, and comments; recoverable errors and rate-limit handling verified |
+| Tests | Done | 24 Devvit client/backend tests pass; live browser checks cover search/filtering, comments, keyboard dismissal, focus restoration, and empty-state recovery |
+| Publish | Done | Public Reddit post works for signed-out readers; source is hosted in the project's GitHub repository |
+| Verify | Done | Typecheck, lint, build, owner/signed-out live checks, and mobile overflow check pass; the earlier standalone Lighthouse audit and its scope are documented in the README |
 
 Work in this order; each milestone should produce a runnable app and a Git commit. Do not add voting, login, subscriptions, infinite scrolling, or custom domains. Sample content is original fictional fixture data and must always be labelled. Live API access must be verified independently.
 
@@ -34,3 +34,5 @@ Mobile: single column; search below introduction; horizontally scrolling communi
 ## State model
 
 Feed has community, submitted query, source mode, request status, request ID, posts, and error. A response is accepted only for the latest request. Comments have independent status and request ID. Never turn a failed live request into an unlabelled success. Rate-limited requests show a recovery message and samples remain available.
+
+The October 5 Devvit test established live API access and public viewing before porting the interface. The public app is at https://www.reddit.com/r/threadlight_tjb/comments/1wylz41/threadlightprobe/. Broader browser coverage and a new audit of Reddit's hosting environment remain future improvements; they are not claimed as completed checks.

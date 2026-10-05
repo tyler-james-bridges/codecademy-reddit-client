@@ -47,6 +47,10 @@
     "testMatch": [
       "**/*.test.js",
       "**/*.test.jsx"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/devvit/"
     ]
   },
   "engines": {
